@@ -9,50 +9,63 @@
     <h2>Login to UMIGO</h2>
     <input type="email" id="email" placeholder="Enter Email"><br>
     <input type="password" id="password" placeholder="Enter Password"><br>
-    <button onclick="userLogin()">Login</button>
-    <button onclick="userSignup()">Sign Up</button>
+    <button id="loginBtn">Login</button>
+    <button id="signupBtn">Sign Up</button>
 
+    <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from "firebase/app";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
+        // 🔥 Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCztcJHjS3qnn4zs3XVyXdvipT48CFUb6c",
             authDomain: "umigo-6e008.firebaseapp.com",
             projectId: "umigo-6e008",
-            storageBucket: "umigo-6e008.firebasestorage.app",
+            storageBucket: "umigo-6e008.appspot.com",
             messagingSenderId: "164885204893",
             appId: "1:164885204893:web:9f03ee20c28534f731e974",
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        window.userLogin = function () {
+        // Login Function
+        function userLogin() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Login Successful!");
+                    console.log("User:", userCredential.user);
                 })
                 .catch((error) => {
                     alert(error.message);
+                    console.error("Login Error:", error);
                 });
-        };
+        }
 
-        window.userSignup = function () {
+        // Signup Function
+        function userSignup() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Signup Successful!");
+                    console.log("User Created:", userCredential.user);
                 })
                 .catch((error) => {
                     alert(error.message);
+                    console.error("Signup Error:", error);
                 });
-        };
+        }
+
+        // Add Event Listeners to Buttons
+        document.getElementById("loginBtn").addEventListener("click", userLogin);
+        document.getElementById("signupBtn").addEventListener("click", userSignup);
     </script>
 </body>
 </html>
