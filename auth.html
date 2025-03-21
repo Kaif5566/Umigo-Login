@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umigo Login</title>
+</head>
+<body>
+    <h2>Login to UMIGO</h2>
+    <input type="email" id="email" placeholder="Enter Email"><br>
+    <input type="password" id="password" placeholder="Enter Password"><br>
+    <button onclick="userLogin()">Login</button>
+    <button onclick="userSignup()">Sign Up</button>
+
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/analytics";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCztcJHjS3qnn4zs3XVyXdvipT48CFUb6c",
+            authDomain: "umigo-6e008.firebaseapp.com",
+            projectId: "umigo-6e008",
+            storageBucket: "umigo-6e008.firebasestorage.app",
+            messagingSenderId: "164885204893",
+            appId: "1:164885204893:web:9f03ee20c28534f731e974",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.userLogin = function () {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Login Successful!");
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        };
+
+        window.userSignup = function () {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Signup Successful!");
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        };
+    </script>
+</body>
+</html>
