@@ -9,6 +9,12 @@ body {
     background-color: #ffffff;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents scrolling */
+    height: 100%; /* Ensures full height */
+}
 
 .fredoka{
     font-family: "Fredoka", sans-serif;
