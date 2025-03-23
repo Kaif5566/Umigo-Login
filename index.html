@@ -4,68 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Umigo Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baumans&family=Fredoka:wght@300..700&family=Inder&family=Staatliches&display=swap" rel="stylesheet">
 </head>
 <body>
     <h2>Login to UMIGO</h2>
     <input type="email" id="email" placeholder="Enter Email"><br>
     <input type="password" id="password" placeholder="Enter Password"><br>
-    <button id="loginBtn">Login</button>
-    <button id="signupBtn">Sign Up</button>
+    <div class="button-container">
+        <button onclick="userLogin()">Login</button>
+        <button onclick="userSignup()">Sign Up</button>
+    </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { initializeApp } from "firebase/app";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/analytics";
 
-        // 🔥 Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCztcJHjS3qnn4zs3XVyXdvipT48CFUb6c",
             authDomain: "umigo-6e008.firebaseapp.com",
             projectId: "umigo-6e008",
-            storageBucket: "umigo-6e008.appspot.com",
+            storageBucket: "umigo-6e008.firebasestorage.app",
             messagingSenderId: "164885204893",
             appId: "1:164885204893:web:9f03ee20c28534f731e974",
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Login Function
-        function userLogin() {
+        window.userLogin = function () {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Login Successful!");
-                    console.log("User:", userCredential.user);
                 })
                 .catch((error) => {
                     alert(error.message);
-                    console.error("Login Error:", error);
                 });
-        }
+        };
 
-        // Signup Function
-        function userSignup() {
+        window.userSignup = function () {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+            const location = document.getElementsByClassName("location").value;
 
-            createUserWithEmailAndPassword(auth, email, password)
+            createUserWithEmailAndPassword(auth, email, location, password)
                 .then((userCredential) => {
                     alert("Signup Successful!");
-                    console.log("User Created:", userCredential.user);
                 })
                 .catch((error) => {
                     alert(error.message);
-                    console.error("Signup Error:", error);
                 });
-        }
-
-        // Add Event Listeners to Buttons
-        document.getElementById("loginBtn").addEventListener("click", userLogin);
-        document.getElementById("signupBtn").addEventListener("click", userSignup);
+        };
     </script>
 </body>
 </html>
